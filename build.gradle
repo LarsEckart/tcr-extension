@@ -1,0 +1,39 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    api "org.junit.jupiter:junit-jupiter-api:5.6.2"
+
+    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+
+    // Use JUnit Jupiter API for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+
+    // Use JUnit Jupiter Engine for testing.
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.larseckart.tcr'
+            artifactId = 'tcr-extension'
+            version = '0.1'
+
+            from components.java
+        }
+    }
+}
+
