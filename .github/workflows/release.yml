@@ -23,5 +23,6 @@ jobs:
           java-version: 11
       - name: Run Gradle's test task
         run: ./gradlew --no-daemon --parallel --continue --build-cache --stacktrace publish
-        with:
-          repo-token: ${{ secrets.GH_TOKEN }}
+        env:
+          GH_USERNAME: 'GitHub Action'
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
