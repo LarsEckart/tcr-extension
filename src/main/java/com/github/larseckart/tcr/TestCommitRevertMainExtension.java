@@ -58,7 +58,7 @@ public class TestCommitRevertMainExtension implements TestExecutionExceptionHand
   }
 
   private static void revertGit(File gitDir) {
-    runOnConsole(gitDir, "git", "revert", "--source", "HEAD", "src/main/");
+    runOnConsole(gitDir, "git", "checkout", "src/main/");
     System.out.println("Test Failed, reverting...");
   }
 
