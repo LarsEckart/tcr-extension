@@ -26,9 +26,19 @@ test {
 }
 
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/LarsEckart/tcr-extension")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("GH_USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("GH_TOKEN")
+            }
+        }
+    }
     publications {
-        maven(MavenPublication) {
-            groupId = 'com.github.larseckart.tcr'
+        gpr(MavenPublication) {
+            groupId = 'com.github.larseckart'
             artifactId = 'tcr-extension'
             version = '0.1'
 
