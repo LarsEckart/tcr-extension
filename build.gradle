@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     // This dependency is exported to consumers, that is to say found on their compile classpath.
-    api "org.junit.jupiter:junit-jupiter-api:5.6.2"
+    api "org.junit.jupiter:junit-jupiter-api:5.7.0"
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
 
