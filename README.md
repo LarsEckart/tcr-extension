@@ -17,3 +17,8 @@ JUnit 5 extension for Kent Beck's test commit revert workflow.
     
 
     testImplementation("com.github.larseckart:tcr-extension:0.3.0")
+    
+    # todo
+    
+    publish to maven central ?
+    https://h4pehl.medium.com/publish-your-gradle-artifacts-to-maven-central-f74a0af085b1
