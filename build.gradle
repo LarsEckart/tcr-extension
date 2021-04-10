@@ -5,7 +5,6 @@ plugins {
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
@@ -40,7 +39,7 @@ publishing {
         gpr(MavenPublication) {
             groupId = 'com.github.larseckart'
             artifactId = 'tcr-extension'
-            version = '0.4.0'
+            version = '0.5.0'
 
             from components.java
         }
