@@ -62,16 +62,20 @@ public class TestCommitRevertMainExtension implements TestExecutionExceptionHand
     System.out.println("Test Failed, reverting...");
   }
 
-  private static void commit(File gitDir) {
+  private void commit(File gitDir) {
     if (isGitEmpty(gitDir)) {
       System.out.println("Nothing to commit");
       return;
     }
-    String message = ArlosGitNotationPrompt.display();
+    String message = getCommitMessage();
     if (!message.isEmpty()) {
       runOnConsole(gitDir, "git", "add", "-A");
       runOnConsole(gitDir, "git", "commit", "-m", message);
     }
+  }
+
+  protected String getCommitMessage() {
+    return ArlosGitNotationPrompt.display();
   }
 
   private static boolean isGitEmpty(File gitDir) {

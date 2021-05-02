@@ -39,7 +39,7 @@ publishing {
         gpr(MavenPublication) {
             groupId = 'com.github.larseckart'
             artifactId = 'tcr-extension'
-            version = '0.5.0'
+            version = '0.6.0'
 
             from components.java
         }
