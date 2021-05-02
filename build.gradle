@@ -138,9 +138,12 @@ model {
         destination = file("$buildDir/generated-pom.xml")
     }
     tasks.publishMavenJavaPublicationToMavenLocal {
-        dependsOn project.tasks.signArchives
+        dependsOn(project.tasks.signArchives)
     }
     tasks.publishMavenJavaPublicationToMavenRepository {
-        dependsOn project.tasks.signArchives
+        dependsOn(project.tasks.signArchives)
+    }
+    tasks.publish {
+        dependsOn(project.tasks.build)
     }
 }
