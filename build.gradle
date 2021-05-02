@@ -8,15 +8,9 @@ repositories {
 }
 
 dependencies {
-    // This dependency is exported to consumers, that is to say found on their compile classpath.
     api "org.junit.jupiter:junit-jupiter-api:5.7.1"
 
-    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
-
-    // Use JUnit Jupiter API for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
-
-    // Use JUnit Jupiter Engine for testing.
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
 }
 

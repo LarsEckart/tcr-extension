@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(TestCommitRevertExtension.class)
+@ExtendWith(FastTestCommitRevertMainExtension.class)
 class LibraryTest {
   @Test
   void testSomeLibraryMethod() {
