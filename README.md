@@ -1,24 +1,85 @@
 # tcr-extension
-JUnit 5 extension for Kent Beck's test commit revert workflow.
 
-# How to use
+[Kent Beck's test && commit || revert](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)
+was an interesting and new approach at the end of 2018. Taking very small steps, allowing yourself
+to throw away code that didn't work and starting over, it's been fun to give that a try. Doing all
+the git ceremony around the workflow manually turned out to be quite tedious though. For java &
+IntelliJ, there was no continuous test runner yet and using file watchers and bash scripts also
+didn't produce good results. While working
+on [ApprovalTests.Java](https://github.com/approvals/ApprovalTests.Java) I stumbled on a few JUnit4
+runners aroun that topic. To use them with JUnit5, I learned
+about [Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions) and that is how
+this project was born.
 
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/LarsEckart/tcr-extension")
-            credentials {
-                username = project.findProperty("gpr.user") ?: System.getenv("GH_USERNAME")
-                password = project.findProperty("gpr.key") ?: System.getenv("GH_TOKEN")
-            }
-        }
-    }
-    
-    
+## How to get it
 
-    testImplementation("com.github.larseckart:tcr-extension:0.3.0")
-    
-    # todo
-    
-    publish to maven central ?
-    https://h4pehl.medium.com/publish-your-gradle-artifacts-to-maven-central-f74a0af085b1
+I'm in the process of publishing the artifacts to mavenCentral, once this is complete the following
+declarations should work:
+
+### Consume with gradle
+
+```groovy
+dependencies {
+    testImplementation("com.larseckart:junit-tcr-extensions:0.0.1")
+}
+```
+
+### Consume with maven
+
+```xml
+
+<dependency>
+  <groupId>com.larseckart</groupId>
+  <artifactId>junit-tcr-extensions</artifactId>
+  <version>0.0.1</version>
+  <scope>test</scope>
+</dependency>
+```
+
+## Examples
+
+```java
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import com.github.larseckart.tcr.TestCommitRevertExtension;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
+@ExtendWith(TestCommitRevertExtension.class)
+class LibraryTest {
+
+  @Test
+  void testSomeLibraryMethod() {
+    assertEquals("42", "4" + "2");
+  }
+}
+```
+
+### other extensions
+
+`CommitOnGreenExtension` will not revert anything but prompt you to commit each time tests pass.
+
+`FastTestCommitRevertMainExtension` will use a apple script dialog for the commit message which is
+much faster than the java dialog.
+
+`SilentTestCommitRevertMainExtension`will not spawn the commit message dialog.
+
+`TestCommitRevertMainExtension` will not revert your tests but only your main folder.
+
+## Limitations
+
+* does not support gradle multi module projects
+* right now there is a lot of duplication, I expect a lot of refactoring. Luckily this won't
+  influence the usage at all.
+* No support yet to declare this extension for the whole test suit (at least I'm not aware).
+* No GitHub actions yet to automate Ci and release
+
+## LICENSE
+
+[Apache 2.0 License](https://github.com/LarsEckart/tcr-extension/blob/main/LICENSE)
+
+## Questions?
+
+Reach out on twitter: [@LrsEckrt](https://twitter.com/LrsEckrt)
+or publish an [issue](https://github.com/LarsEckart/tcr-extension/issues).
+
