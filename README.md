@@ -1,3 +1,6 @@
+[![test](https://github.com/LarsEckart/tcr-extension/actions/workflows/test.yml/badge.svg)](https://github.com/LarsEckart/tcr-extension/actions/workflows/test.yml)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.larseckart/junit-tcr-extensions/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.larseckart/junit-tcr-extensions)
+
 # tcr-extension
 
 [Kent Beck's test && commit || revert](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)
