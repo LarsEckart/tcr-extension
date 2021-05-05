@@ -6,20 +6,17 @@
 [Kent Beck's test && commit || revert](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)
 was an interesting and new approach at the end of 2018. Taking very small steps, allowing yourself
 to throw away code that didn't work and starting over, it's been fun to give that a try. Doing all
-the git ceremony around the workflow manually turned out to be quite tedious though. For java &
+the git ceremony around the workflow manually turned out to be quite tedious though. For Java &
 IntelliJ, there was no continuous test runner yet and using file watchers and bash scripts also
 didn't produce good results. While working
-on [ApprovalTests.Java](https://github.com/approvals/ApprovalTests.Java) I stumbled on a few JUnit4
-runners aroun that topic. To use them with JUnit5, I learned
+on [ApprovalTests.Java](https://github.com/approvals/ApprovalTests.Java), I stumbled on a few JUnit4
+runners around that topic. To use them with JUnit5, I learned
 about [Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions) and that is how
 this project was born.
 
 ## How to get it
 
-I'm in the process of publishing the artifacts to mavenCentral, once this is complete the following
-declarations should work:
-
-### Consume with gradle
+### Gradle
 
 ```groovy
 dependencies {
@@ -27,7 +24,7 @@ dependencies {
 }
 ```
 
-### Consume with maven
+### Maven
 
 ```xml
 
@@ -71,8 +68,8 @@ class LibraryTest {
 
 ## Limitations
 
-* does not support gradle multi module projects
-* right now there is a lot of duplication, I expect a lot of refactoring. Luckily this won't
+* Does not support Gradle multi module projects
+* Right now there is a lot of duplication, I expect a lot of refactoring. Luckily this won't
   influence the usage at all.
 * No support yet to declare this extension for the whole test suit (at least I'm not aware).
 * No GitHub actions yet to automate Ci and release
