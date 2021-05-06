@@ -60,6 +60,7 @@ class LibraryTest {
 | I want to | Extension |
 |-----------|-----------|
 | ... commit when tests pass, but not revert anything when they fail | CommitOnGreenExtension |
+| ... commit when tests pass, revert when they fail | TestCommitRevertExtension | 
 | ... do TCR but don't bug me with commit messages | SilentTestCommitRevertMainExtension |
 | ... do TCR but don't revert my tests, only my production code | TestCommitRevertMainExtension |
 | ... do TCR without reverting my tests and I want it to be fast on macOS | FastTestCommitRevertMainExtension |
