@@ -7,6 +7,7 @@ plugins {
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(11))
+        vendor.set(JvmVendorSpec.AZUL)
     }
 }
 
@@ -19,6 +20,12 @@ dependencies {
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.2")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
+}
+
+tasks.register<Test>("testsOn17") {
+    javaLauncher.set(javaToolchains.launcherFor {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    })
 }
 
 val test by tasks.getting(Test::class) {
