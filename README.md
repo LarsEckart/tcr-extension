@@ -16,6 +16,10 @@ this project was born.
 
 ## How to get it
 
+### Starter Project
+
+The easiest way to start a new project with this is by cloning [the starter project](https://github.com/LarsEckart/tcr-extension.starterproject).
+
 ### Gradle
 
 ```groovy
