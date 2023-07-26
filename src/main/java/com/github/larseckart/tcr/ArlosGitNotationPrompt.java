@@ -120,7 +120,7 @@ public class ArlosGitNotationPrompt {
     addHelpText2(text, position, false);
   }
 
-  private static void addHelpText(JPanel panel, String text, int position, boolean first) {
+  public static void addHelpText(JPanel panel, String text, int position, boolean first) {
     var gridBagConstraints = new GridBagConstraints();
     JLabel helpText = new JLabel(text);
     var font = new Font("Courier", first ? Font.BOLD : Font.PLAIN, 16);
