@@ -6,3 +6,6 @@ build
 
 # intellij
 .idea
+
+# ApprovalTests
+*.received.*

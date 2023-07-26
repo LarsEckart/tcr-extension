@@ -1,27 +1,16 @@
 package com.github.larseckart.tcr;
 
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
-public class ArlosGitNotationPrompt {
+public class ArlosGitNotation2Prompt {
   private String message = "";
   private boolean done = false;
   private final JPanel panel = new JPanel();
 
-  public ArlosGitNotationPrompt() {
+  public ArlosGitNotation2Prompt() {
     setLayout();
   }
 
@@ -29,42 +18,49 @@ public class ArlosGitNotationPrompt {
     panel.setLayout(new GridBagLayout());
     addCustomCommitPart();
     addQuickKeys();
-    addArlosGitNotation();
+    int position = addArlosGitNotation();
+    addExamples(position);
   }
 
-  private void addArlosGitNotation() {
+  private int addArlosGitNotation() {
     int position = 4;
-    addHelpText("Arlo's Git Notation:", position++, true);
-    addHelpText("------ High Risk ------", position++);
-    addHelpText("F   Feature (< 9 LoC)", position++);
-    addHelpText("B   Bug (< 9 LoC)", position++);
-    addHelpText("R   Test-supported Refactoring", position++);
-    addHelpText("F!! Feature (> 8 LoC)", position++);
-    addHelpText("B!! Bug (> 8 LoC)", position++);
-    addHelpText("R!! Non-provable refactoring", position++);
-    addHelpText("*** Non-compiling commit", position++);
+    addHelpText("Arlo's Commit Notation:", position++, true);
+    addHelpText("------ Risk ------", position++);
+    addHelpText(".   Provable", position++);
+    addHelpText("-   Tested", position++);
+    addHelpText("!   Single Action", position++);
+    addHelpText("@   Other", position++);
+
     position = 5;
-    addHelpText2("------ Low  Risk ------", position++);
-    addHelpText2("c   Comments (add/delete)", position++);
-    addHelpText2("d   Developer documentation changes", position++);
-    addHelpText2("e   Environment (non-code) changes", position++);
-    addHelpText2("t   Test only change", position++);
-    addHelpText2("r   Provable Refactoring", position++);
-    addHelpText2("a   Automated formatting", position++);
+    addHelpText2("------ Action ------", position++);
+    addHelpText2("r   Refactoring", position++);
+    addHelpText2("e   Environment (non-code)", position++);
+    addHelpText2("d   Documentation", position++);
+    addHelpText2("t   Test only", position++);
+    addHelpText2("F   Feature", position++);
+    addHelpText2("B   Bugfix", position++);
+    return position;
   }
 
   private void addQuickKeys() {
     int position = 1;
     addHelpText("Quick Actions:", 2, true);
-    createQuickbutton("Rename", "r   Rename", KeyEvent.VK_R, position++);
-    createQuickbutton("Inline", "r   Inline", KeyEvent.VK_I, position++);
-    createQuickbutton("Extract Method", "r   Extract Method", KeyEvent.VK_M, position++);
-    createQuickbutton("Extract Variable", "r   Extract Variable", KeyEvent.VK_V, position++);
-    createQuickbutton("Delete Clutter", "r   Delete Clutter", KeyEvent.VK_D, position++);
+    createQuickbutton("Rename", ". r Rename", KeyEvent.VK_R, position++);
+    createQuickbutton("Inline", ". r Inline", KeyEvent.VK_I, position++);
+    createQuickbutton("Extract Method", ". r Extract Method", KeyEvent.VK_M, position++);
+    createQuickbutton("Extract Variable", ". r Extract Variable", KeyEvent.VK_V, position++);
+    createQuickbutton("Delete Clutter", ". r Delete Clutter", KeyEvent.VK_D, position++);
+  }
+
+  private void addExamples(int position) {
+    addHelpText("Examples:", position++, true);
+    addHelpText(". r rename variable", position++);
+    addHelpText("! B fixed spelling on label", position++);
+
   }
 
   private void addCustomCommitPart() {
-    {
+  {
       // Commit Message:
       GridBagConstraints c = new GridBagConstraints();
       JLabel commitLabel = new JLabel("Commit Message:");
@@ -170,7 +166,7 @@ public class ArlosGitNotationPrompt {
   }
 
   public static String display() {
-    ArlosGitNotationPrompt panel = new ArlosGitNotationPrompt();
+    ArlosGitNotation2Prompt panel = new ArlosGitNotation2Prompt();
     openInFrame(panel);
     while (!panel.done) {
       try {
@@ -182,7 +178,7 @@ public class ArlosGitNotationPrompt {
     return panel.message;
   }
 
-  private static void openInFrame(ArlosGitNotationPrompt panel) {
+  private static void openInFrame(ArlosGitNotation2Prompt panel) {
     JFrame test = new JFrame("Commit...");
     test.getContentPane().add(panel.panel);
     test.pack();
