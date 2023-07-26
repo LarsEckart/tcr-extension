@@ -34,7 +34,7 @@ public class ArlosGitNotationPrompt {
 
   private void addArlosGitNotation() {
     int position = 4;
-    addHelpText(panel, "Arlo's Git Notation:", position++, true);
+    JPanelHelpers.addHelpText(panel, "Arlo's Git Notation:", position++, true);
     addHelpText("------ High Risk ------", position++);
     addHelpText("F   Feature (< 9 LoC)", position++);
     addHelpText("B   Bug (< 9 LoC)", position++);
@@ -55,7 +55,7 @@ public class ArlosGitNotationPrompt {
 
   private void addQuickKeys() {
     int position = 1;
-    addHelpText(panel, "Quick Actions:", 2, true);
+    JPanelHelpers.addHelpText(panel, "Quick Actions:", 2, true);
     createQuickbutton("Rename", "r   Rename", KeyEvent.VK_R, position++);
     createQuickbutton("Inline", "r   Inline", KeyEvent.VK_I, position++);
     createQuickbutton("Extract Method", "r   Extract Method", KeyEvent.VK_M, position++);
@@ -113,24 +113,11 @@ public class ArlosGitNotationPrompt {
   }
 
   private void addHelpText(String text, int position) {
-    addHelpText(panel, text, position, false);
+    JPanelHelpers.addHelpText(panel, text, position, false);
   }
 
   private void addHelpText2(String text, int position) {
     addHelpText2(text, position, false);
-  }
-
-  public static void addHelpText(JPanel panel, String text, int position, boolean first) {
-    var gridBagConstraints = new GridBagConstraints();
-    JLabel helpText = new JLabel(text);
-    var font = new Font("Courier", first ? Font.BOLD : Font.PLAIN, 16);
-    helpText.setFont(font);
-    gridBagConstraints.anchor = GridBagConstraints.WEST;
-    gridBagConstraints.insets = new Insets(first ? 50 : 0, 10, 10, 0);
-    gridBagConstraints.gridx = 1;
-    gridBagConstraints.gridwidth = 5;
-    gridBagConstraints.gridy = position;
-    panel.add(helpText, gridBagConstraints);
   }
 
   private void addHelpText2(String text, int position, boolean first) {
