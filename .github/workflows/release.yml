@@ -20,8 +20,11 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle-
+      - name: Install gpg secret key
+        run: |
+          # Install gpg secret key
+          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
+          # Verify gpg secret key
+          gpg --list-secret-keys --keyid-format LONG
       - name: publish to github packages
-        run: ./gradlew --no-daemon --parallel --continue --build-cache --stacktrace publish
-        env:
-          GH_USERNAME: 'GitHub Action'
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: ./gradlew --no-daemon --continue --build-cache --stacktrace publish
