@@ -19,11 +19,14 @@ jobs:
         with:
           gradle-home-cache-cleanup: true
       - name: Run Gradle Build
-        run: ./gradlew build --no-daemon -i -x test
+        run: |
+          ./gradlew properties
+          ./gradlew build --no-daemon -i -x test
+        env:
+          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.SONATYPE_USERNAME }}
 
       - name: Run Gradle Publish
         run: |
-          echo "$GITHUB_CONTEXT"
           ./gradlew publish --no-daemon -i
         env:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
