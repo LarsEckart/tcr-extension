@@ -23,6 +23,7 @@ jobs:
 
       - name: Run Gradle Publish
         run: |
+          echo "$GITHUB_CONTEXT"
           ./gradlew publish --no-daemon -i
         env:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
