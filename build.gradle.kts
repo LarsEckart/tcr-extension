@@ -53,8 +53,6 @@ publishing {
             }
         }
     }
-    val sonatypeUsername: String? by project
-    println("will do publish as $sonatypeUsername")
     publications {
         create<MavenPublication>("sonatype") {
             artifactId = "junit-tcr-extensions"
@@ -103,5 +101,8 @@ signing {
         useInMemoryPgpKeys(signingKey, signingPassword)
     }
     println("will do sign")
+
+    val sonatypeUsername: String? by project
+    println("will do publish as $sonatypeUsername")
     sign(publishing.publications["sonatype"])
 }
