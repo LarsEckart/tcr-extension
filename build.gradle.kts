@@ -90,19 +90,9 @@ publishing {
     }
 }
 signing {
-    if (hasProperty("signing.gnupg.keyName") && hasProperty("signing.gnupg.passphrase")) {
-        useGpgCmd()
-        println("will do useGpgCmd")
-    } else if (hasProperty("signingKey") && hasProperty("signingPassword")) {
-        println("will do useInMemoryPgpKeys")
+    val signingKey: String? by project
+    val signingPassword: String? by project
+    useInMemoryPgpKeys(signingKey, signingPassword)
 
-        val signingKey: String? by project
-        val signingPassword: String? by project
-        useInMemoryPgpKeys(signingKey, signingPassword)
-    }
-    println("will do sign")
-
-    val sonatypeUsername: String? by project
-    println("will do publish as $sonatypeUsername")
     sign(publishing.publications["sonatype"])
 }
