@@ -48,11 +48,13 @@ publishing {
             name = "sonatype"
             url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
-                username = project.findProperty("sonatypeUsername") as String? ?: System.getenv("SONATYPE_USER")
-                password = project.findProperty("sonatypePassword") as String? ?: System.getenv("SONATYPE_PASSWORD")
+                username = project.findProperty("sonatypeUsername") as String?
+                password = project.findProperty("sonatypePassword") as String?
             }
         }
     }
+    val sonatypeUsername: String? by project
+    println("will do publish as $sonatypeUsername")
     publications {
         create<MavenPublication>("sonatype") {
             artifactId = "junit-tcr-extensions"
