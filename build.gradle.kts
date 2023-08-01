@@ -48,8 +48,8 @@ publishing {
             name = "sonatype"
             url = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
-                username = project.findProperty("sonatype.user") as String? ?: System.getenv("SONATYPE_USER")
-                password = project.findProperty("sonatype.password") as String? ?: System.getenv("SONATYPE_PASSWORD")
+                username = project.findProperty("sonatypeUsername") as String? ?: System.getenv("SONATYPE_USER")
+                password = project.findProperty("sonatypePassword") as String? ?: System.getenv("SONATYPE_PASSWORD")
             }
         }
     }
@@ -101,9 +101,5 @@ signing {
         useInMemoryPgpKeys(signingKey, signingPassword)
     }
     println("will do sign")
-
-    val signingKey: String? by project
-    val signingPassword: String? by project
-    useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications["sonatype"])
 }
