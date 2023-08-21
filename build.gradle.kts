@@ -2,6 +2,7 @@ plugins {
     `java-library`
     `maven-publish`
     `signing`
+    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
 java {
@@ -57,7 +58,7 @@ publishing {
         create<MavenPublication>("sonatype") {
             artifactId = "junit-tcr-extensions"
             group = "com.larseckart"
-            version = "0.0.2"
+            version = "0.0.3"
             from(components["java"])
 
             pom {
@@ -89,6 +90,15 @@ publishing {
         }
     }
 }
+nexusPublishing {
+    repositories {
+        sonatype {
+            username = project.findProperty("sonatypeUsername") as String?
+            password = project.findProperty("sonatypePassword") as String?
+        }
+    }
+}
+
 signing {
     val signingKey: String? by project
     val signingPassword: String? by project
