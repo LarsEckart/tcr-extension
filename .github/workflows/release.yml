@@ -24,7 +24,7 @@ jobs:
 
       - name: Run Gradle Publish
         run: |
-          ./gradlew publish --no-daemon -i
+          ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository --no-daemon -i
         env:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
