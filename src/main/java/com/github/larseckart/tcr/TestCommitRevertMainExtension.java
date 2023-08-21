@@ -75,7 +75,7 @@ public class TestCommitRevertMainExtension implements TestExecutionExceptionHand
   }
 
   protected String getCommitMessage() {
-    return ArlosGitNotationPrompt.display();
+    return ArlosGitNotation2Prompt.display();
   }
 
   private static boolean isGitEmpty(File gitDir) {

@@ -66,7 +66,7 @@ public class CommitOnGreenExtension
       System.out.println("Nothing to commit");
       return;
     }
-    String message = ArlosGitNotationPrompt.display();
+    String message = ArlosGitNotation2Prompt.display();
     if (!message.isEmpty()) {
       runOnConsole(gitDir, "git", "add", "-A");
       runOnConsole(gitDir, "git", "commit", "-m", message);
