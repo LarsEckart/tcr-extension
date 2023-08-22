@@ -2,7 +2,6 @@ plugins {
     `java-library`
     `maven-publish`
     `signing`
-    id("io.github.gradle-nexus.publish-plugin") version "1.3.0"
 }
 
 java {
@@ -87,14 +86,6 @@ publishing {
                     system.set("GitHub")
                 }
             }
-        }
-    }
-}
-nexusPublishing {
-    repositories {
-        sonatype {
-            username = project.findProperty("SONATYPE_TOKEN_USERNAME") as String?
-            password = project.findProperty("SONATYPE_TOKEN_PASSWORD") as String?
         }
     }
 }
