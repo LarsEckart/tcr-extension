@@ -19,7 +19,7 @@ dependencies {
     api("org.junit.jupiter:junit-jupiter-api:5.10.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
-    testImplementation("com.approvaltests:approvaltests:18.7.1")
+    testImplementation("com.approvaltests:approvaltests:23.0.1")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
 }
 
