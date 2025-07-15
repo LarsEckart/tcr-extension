@@ -111,8 +111,8 @@ ls -la *.md5 *.sha1
 
 # Create bundle
 echo "Creating bundle..."
-cd ../../..
-zip -r central-bundle.zip com/
+cd ../../../../..
+zip -r central-bundle.zip . -i central-bundle/com/*
 
 echo "Bundle created:"
 ls -la central-bundle.zip

@@ -9,3 +9,7 @@ build
 
 # ApprovalTests
 *.received.*
+
+# Maven Central publishing artifacts
+central-bundle/
+central-bundle.zip
