@@ -57,7 +57,7 @@ publishing {
         create<MavenPublication>("sonatype") {
             artifactId = "junit-tcr-extensions"
             group = "com.larseckart"
-            version = "0.0.3"
+            version = "0.0.4"
             from(components["java"])
 
             pom {
