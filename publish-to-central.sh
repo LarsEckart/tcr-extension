@@ -107,8 +107,8 @@ fi
 # Generate checksums
 echo "Generating checksums..."
 for file in *.jar *.pom; do
-    md5sum "$file" > "$file.md5"
-    sha1sum "$file" > "$file.sha1"
+    md5sum "$file" | cut -d' ' -f1 > "$file.md5"
+    sha1sum "$file" | cut -d' ' -f1 > "$file.sha1"
 done
 
 echo "Generated checksums:"
