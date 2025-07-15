@@ -29,6 +29,16 @@ jobs:
       - name: Build artifacts
         run: ./gradlew clean build
         
+      - name: Setup GPG
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
+          GPG_PASSPHRASE: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
+        run: |
+          echo "$GPG_PRIVATE_KEY" | base64 --decode | gpg --batch --yes --import
+          echo "use-agent" > ~/.gnupg/gpg.conf
+          echo "pinentry-mode loopback" >> ~/.gnupg/gpg.conf
+          echo "RELOADAGENT" | gpg-connect-agent
+        
       - name: Publish to Maven Central Portal
         env:
           MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
@@ -57,10 +67,10 @@ jobs:
           
           # Sign artifacts
           echo "Signing artifacts..."
-          gpg --batch --yes --armor --detach-sign ${ARTIFACT}-${VERSION}.jar
-          gpg --batch --yes --armor --detach-sign ${ARTIFACT}-${VERSION}-sources.jar
-          gpg --batch --yes --armor --detach-sign ${ARTIFACT}-${VERSION}-javadoc.jar
-          gpg --batch --yes --armor --detach-sign ${ARTIFACT}-${VERSION}.pom
+          gpg --batch --yes --armor --detach-sign --pinentry-mode loopback --passphrase "${ORG_GRADLE_PROJECT_signingPassword}" ${ARTIFACT}-${VERSION}.jar
+          gpg --batch --yes --armor --detach-sign --pinentry-mode loopback --passphrase "${ORG_GRADLE_PROJECT_signingPassword}" ${ARTIFACT}-${VERSION}-sources.jar
+          gpg --batch --yes --armor --detach-sign --pinentry-mode loopback --passphrase "${ORG_GRADLE_PROJECT_signingPassword}" ${ARTIFACT}-${VERSION}-javadoc.jar
+          gpg --batch --yes --armor --detach-sign --pinentry-mode loopback --passphrase "${ORG_GRADLE_PROJECT_signingPassword}" ${ARTIFACT}-${VERSION}.pom
           
           # Generate checksums
           echo "Generating checksums..."
