@@ -21,8 +21,8 @@ jobs:
           distribution: 'zulu'
           java-version: 11
           
-      - name: Setup Gradle Build Action
-        uses: gradle/gradle-build-action@v3
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
         with:
           gradle-home-cache-cleanup: true
           
@@ -50,7 +50,7 @@ jobs:
           set +x  # Disable command echoing for credentials
           
           VERSION="${{ github.event.inputs.version }}"
-          ARTIFACT="junit-tcr-extensions"
+          ARTIFACT="tcr-extension"
           GROUP_PATH="com/larseckart"
           
           echo "Publishing version: $VERSION"
