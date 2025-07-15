@@ -4,6 +4,8 @@ plugins {
     `signing`
 }
 
+version = "0.0.4"
+
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(11))
