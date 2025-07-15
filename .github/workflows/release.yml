@@ -29,6 +29,13 @@ jobs:
       - name: Build artifacts
         run: ./gradlew clean build
         
+      - name: Debug - List build output
+        run: |
+          echo "Listing build/libs directory:"
+          ls -la build/libs/
+          echo "Listing build/publications directory:"
+          find build/publications/ -name "*.xml" | head -5
+        
       - name: Setup GPG
         env:
           GPG_PRIVATE_KEY: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
