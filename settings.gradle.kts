@@ -1,1 +1,1 @@
-rootProject.name = "tcr-extension"
+rootProject.name = "junit-tcr-extensions"

@@ -6,7 +6,7 @@ set -e
 
 # Configuration
 VERSION="${1:-0.0.4}"
-ARTIFACT="tcr-extension"
+ARTIFACT="junit-tcr-extensions"
 GROUP_PATH="com/larseckart"
 
 # Check if we're running in CI
