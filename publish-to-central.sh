@@ -18,6 +18,10 @@ else
     SKIP_UPLOAD=true
 fi
 
+# Clean up any existing bundle artifacts
+echo "Cleaning up existing bundle artifacts..."
+rm -rf central-bundle central-bundle.zip
+
 echo "Publishing version: $VERSION"
 echo "Skip upload: $SKIP_UPLOAD"
 
@@ -73,6 +77,7 @@ echo "Setting up bundle directory..."
 rm -rf central-bundle
 mkdir -p central-bundle/${GROUP_PATH}/${ARTIFACT}/${VERSION}/
 cd central-bundle/${GROUP_PATH}/${ARTIFACT}/${VERSION}/
+ORIGINAL_DIR=$(pwd | sed "s|/central-bundle.*|/central-bundle|")
 
 # Copy artifacts
 echo "Copying artifacts..."
@@ -111,8 +116,10 @@ ls -la *.md5 *.sha1
 
 # Create bundle
 echo "Creating bundle..."
-cd ../../../../..
-zip -r central-bundle.zip . -i central-bundle/com/*
+BUNDLE_ROOT=$(pwd | sed 's|/central-bundle/.*||')/central-bundle
+cd "$BUNDLE_ROOT"
+zip -r ../central-bundle.zip com/
+cd ..
 
 echo "Bundle created:"
 ls -la central-bundle.zip
@@ -133,8 +140,13 @@ if [[ "$SKIP_UPLOAD" == "false" ]]; then
     
     echo "Upload response: $RESPONSE"
     
-    # Extract deployment ID
-    DEPLOYMENT_ID=$(echo "$RESPONSE" | grep -o '"deploymentId":"[^"]*"' | cut -d'"' -f4)
+    # Check if response is a UUID (deployment ID) or JSON
+    if [[ "$RESPONSE" =~ ^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$ ]]; then
+        DEPLOYMENT_ID="$RESPONSE"
+    else
+        # Try to extract from JSON format
+        DEPLOYMENT_ID=$(echo "$RESPONSE" | grep -o '"deploymentId":"[^"]*"' | cut -d'"' -f4)
+    fi
     echo "Deployment ID: $DEPLOYMENT_ID"
     
     if [[ -n "$DEPLOYMENT_ID" ]]; then
