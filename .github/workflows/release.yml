@@ -1,32 +1,100 @@
-name: Release build
+name: Release to Maven Central Portal
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release'
+        required: true
+        default: '0.0.4'
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
-    name: on ubuntu-latest
     steps:
       - name: Check out repo
-        uses: actions/checkout@v3
-      - uses: actions/setup-java@v4
+        uses: actions/checkout@v4
+        
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: 11
+          
       - name: Setup Gradle Build Action
         uses: gradle/gradle-build-action@v3
         with:
           gradle-home-cache-cleanup: true
-      - name: Run Gradle Build
-        run: |
-          ./gradlew build --no-daemon -i -x test
-
-      - name: Run Gradle Publish
-        run: |
-          ./gradlew publish --no-daemon -i
+          
+      - name: Build artifacts
+        run: ./gradlew clean build
+        
+      - name: Publish to Maven Central Portal
         env:
+          MAVEN_CENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_CENTRAL_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
-          ORG_GRADLE_PROJECT_sonatypeUsername: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPE_TOKEN_USERNAME }}
-          ORG_GRADLE_PROJECT_sonatypePassword: ${{ secrets.ORG_GRADLE_PROJECT_SONATYPE_TOKEN_PASSWORD }}
+        run: |
+          set -e
+          set +x  # Disable command echoing for credentials
+          
+          VERSION="${{ github.event.inputs.version }}"
+          ARTIFACT="junit-tcr-extensions"
+          GROUP_PATH="com/larseckart"
+          
+          echo "Publishing version: $VERSION"
+          
+          # Setup bundle directory
+          mkdir -p central-bundle/${GROUP_PATH}/${ARTIFACT}/${VERSION}/
+          cd central-bundle/${GROUP_PATH}/${ARTIFACT}/${VERSION}/
+          
+          # Copy artifacts
+          cp ../../../../build/libs/${ARTIFACT}-${VERSION}.jar .
+          cp ../../../../build/libs/${ARTIFACT}-${VERSION}-sources.jar .
+          cp ../../../../build/libs/${ARTIFACT}-${VERSION}-javadoc.jar .
+          cp ../../../../build/publications/sonatype/pom-default.xml ${ARTIFACT}-${VERSION}.pom
+          
+          # Sign artifacts
+          echo "Signing artifacts..."
+          gpg --batch --yes --armor --detach-sign ${ARTIFACT}-${VERSION}.jar
+          gpg --batch --yes --armor --detach-sign ${ARTIFACT}-${VERSION}-sources.jar
+          gpg --batch --yes --armor --detach-sign ${ARTIFACT}-${VERSION}-javadoc.jar
+          gpg --batch --yes --armor --detach-sign ${ARTIFACT}-${VERSION}.pom
+          
+          # Generate checksums
+          echo "Generating checksums..."
+          for file in *.jar *.pom; do
+              md5sum "$file" > "$file.md5"
+              sha1sum "$file" > "$file.sha1"
+          done
+          
+          # Create bundle
+          echo "Creating bundle..."
+          cd ../../..
+          zip -r central-bundle.zip com/
+          
+          # Upload to Maven Central Portal
+          echo "Uploading to Maven Central Portal..."
+          AUTH_TOKEN=$(echo -n "${MAVEN_CENTRAL_USERNAME}:${MAVEN_CENTRAL_PASSWORD}" | base64)
+          
+          RESPONSE=$(curl --silent --request POST \
+            --header "Authorization: Bearer ${AUTH_TOKEN}" \
+            --form bundle=@central-bundle.zip \
+            --form name="${ARTIFACT}-${VERSION}" \
+            https://central.sonatype.com/api/v1/publisher/upload)
+          
+          echo "Upload response: $RESPONSE"
+          
+          # Extract deployment ID
+          DEPLOYMENT_ID=$(echo "$RESPONSE" | grep -o '"deploymentId":"[^"]*"' | cut -d'"' -f4)
+          echo "Deployment ID: $DEPLOYMENT_ID"
+          
+          if [[ -n "$DEPLOYMENT_ID" ]]; then
+              echo "✅ Upload successful!"
+              echo "Check deployment status at: https://central.sonatype.com/publishing/deployments"
+              echo "Deployment ID: $DEPLOYMENT_ID"
+          else
+              echo "❌ Upload failed"
+              exit 1
+          fi
