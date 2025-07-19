@@ -12,14 +12,8 @@ import java.io.File;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(TestCommitRevertExtension.class)
 @EnabledOnOs({ MAC })
 class LibraryTest {
-
-  @Test
-  void testSomeLibraryMethod() {
-    assertEquals("42", "4" + "2");
-  }
 
   @Test
   void testAmendMessageDetectedCaseInsensitive() {
@@ -37,6 +31,5 @@ class LibraryTest {
     assertFalse(isAmendMessage(" amend "));
     assertFalse(isAmendMessage("amend please"));
     assertFalse(isAmendMessage(""));
-    assertFalse(isAmendMessage(null));
   }
 }

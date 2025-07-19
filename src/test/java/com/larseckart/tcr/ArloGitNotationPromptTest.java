@@ -10,8 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.condition.OS.MAC;
 
-@ExtendWith(TestCommitRevertExtension.class)
-
 @EnabledOnOs({ MAC })
 public class ArloGitNotationPromptTest {
     @Test

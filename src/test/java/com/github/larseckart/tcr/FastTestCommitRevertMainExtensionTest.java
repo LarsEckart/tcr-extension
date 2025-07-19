@@ -16,7 +16,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for FastTestCommitRevertMainExtension to verify AppleScript command execution
  * without actually executing osascript commands.
  */
-@ExtendWith(TestCommitRevertExtension.class)
 class FastTestCommitRevertMainExtensionTest {
 
     private MockProcessExecutor mockExecutor;

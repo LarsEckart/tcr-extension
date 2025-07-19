@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for GitOperations to verify correct command execution
  * without actually executing git commands.
  */
-@ExtendWith(TestCommitRevertExtension.class)
 class GitOperationsTest {
 
     @TempDir
