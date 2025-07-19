@@ -71,7 +71,7 @@ All extensions implement `TestExecutionExceptionHandler` and `AfterAllCallback` 
 - `settings.gradle.kts` - Gradle settings file
 - `src/main/java/com/github/larseckart/tcr/` - Main extension implementations
 - `src/test/java/com/larseckart/tcr/` - Self-dogfooding tests
-- Build via Gradle with Java 11 toolchain (Azul Zulu)
+- Build via Gradle with Java 17 toolchain (Azul Zulu)
 - Published to Maven Central via GitHub Actions with PGP signing
 
 ## Known Limitations
