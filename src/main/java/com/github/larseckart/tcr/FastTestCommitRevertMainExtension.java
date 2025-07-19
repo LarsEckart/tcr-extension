@@ -1,34 +1,28 @@
 package com.github.larseckart.tcr;
 
-
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class FastTestCommitRevertMainExtension extends TestCommitRevertMainExtension {
 
   private static String SCRIPT_PATH = null;
+  private static ProcessExecutor executor = new ProcessBuilderExecutor();
+  
+  // Package-visible for testing
+  static void setExecutor(ProcessExecutor executor) {
+    FastTestCommitRevertMainExtension.executor = executor;
+  }
 
   @Override
   protected String getCommitMessage() {
     try {
       ensureApplescript();
-      ProcessBuilder pb = new ProcessBuilder("osascript", SCRIPT_PATH);
-      Process exec = pb.start();
-      exec.waitFor();
-      InputStream inputStream = exec.getInputStream();
-      BufferedReader reader = new BufferedReader(
-          new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-      StringBuffer string = new StringBuffer();
-      while (reader.ready()) {
-        string.append(reader.readLine());
-      }
-      reader.close();
-      String commitMessage = string.toString().trim();
+      // Use current working directory (doesn't matter for osascript)
+      File workingDir = new File(".");
+      String output = executor.executeCommandForOutput(workingDir, "osascript", SCRIPT_PATH);
+      String commitMessage = output.trim();
       System.out.println("message: " + commitMessage);
       return commitMessage;
     } catch (Throwable t) {
