@@ -37,7 +37,7 @@ jobs:
         
       - name: Update version in build.gradle.kts
         run: |
-          sed -i 's/version = ".*"/version = "${{ github.event.inputs.version }}"/' build.gradle.kts
+          sed -i.bak 's/version = ".*"/version = "${{ github.event.inputs.version }}"/' build.gradle.kts
           echo "Updated version to ${{ github.event.inputs.version }}"
           grep "version = " build.gradle.kts
           

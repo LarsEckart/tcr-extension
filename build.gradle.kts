@@ -4,7 +4,7 @@ plugins {
     `signing`
 }
 
-version = "0.0.4"
+version = "0.0.0"
 
 java {
     toolchain {
@@ -59,7 +59,7 @@ publishing {
         create<MavenPublication>("sonatype") {
             artifactId = "junit-tcr-extensions"
             group = "com.larseckart"
-            version = project.version
+            version = project.version.toString()
             from(components["java"])
 
             pom {
