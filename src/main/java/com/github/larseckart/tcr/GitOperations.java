@@ -1,17 +1,16 @@
 package com.github.larseckart.tcr;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class GitOperations {
 
-  private static final boolean PRINT_ONLY = false;
+  private static ProcessExecutor executor = new ProcessBuilderExecutor();
+  
+  // Package-visible for testing
+  static void setExecutor(ProcessExecutor executor) {
+    GitOperations.executor = executor;
+  }
 
   public static File getRootFolder() {
     try {
@@ -33,7 +32,7 @@ public class GitOperations {
 
   public static boolean isGitEmpty(File gitDir) {
     try {
-      String output = runOnConsoleForOutput(gitDir, "git", "status");
+      String output = executor.executeCommandForOutput(gitDir, "git", "status");
       return output.contains("nothing to commit");
     } catch (Exception e) {
       return false;
@@ -41,12 +40,16 @@ public class GitOperations {
   }
 
   public static void stageAllChanges(File gitDir) {
-    runOnConsole(gitDir, "git", "add", "-A");
+    try {
+      executor.executeCommand(gitDir, "git", "add", "-A");
+    } catch (IOException | InterruptedException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public static void amendCommit(File gitDir) {
     try {
-      String output = runOnConsoleForOutput(gitDir, "git", "log", "--oneline", "-1");
+      String output = executor.executeCommandForOutput(gitDir, "git", "log", "--oneline", "-1");
       if (output.trim().isEmpty()) {
         System.err.println("Cannot amend: no previous commits found");
         return;
@@ -55,7 +58,11 @@ public class GitOperations {
       System.err.println("Cannot amend: no previous commits found");
       return;
     }
-    runOnConsole(gitDir, "git", "commit", "--amend", "--no-edit");
+    try {
+      executor.executeCommand(gitDir, "git", "commit", "--amend", "--no-edit");
+    } catch (IOException | InterruptedException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public static boolean isAmendMessage(String message) {
@@ -66,50 +73,29 @@ public class GitOperations {
     if (isAmendMessage(message)) {
       amendCommit(gitDir);
     } else {
-      runOnConsole(gitDir, "git", "commit", "-m", message);
+      try {
+        executor.executeCommand(gitDir, "git", "commit", "-m", message);
+      } catch (IOException | InterruptedException e) {
+        throw new RuntimeException(e);
+      }
     }
   }
 
   public static void revertAllChanges(File gitDir) {
-    runOnConsole(gitDir, "git", "clean", "-fd");
-    runOnConsole(gitDir, "git", "reset", "--hard", "HEAD");
-  }
-
-  public static void revertMainDirectoryOnly(File gitDir) {
-    runOnConsole(gitDir, "git", "checkout", "src/main/");
-  }
-
-  private static String readStream(InputStream inputStream) {
-    try (var reader =
-        new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-      return reader.lines().collect(Collectors.joining("\n"));
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
-
-  private static void runOnConsole(File workingDir, String... cmdArgs) throws Error {
-    if (PRINT_ONLY) {
-      System.out.println(Arrays.toString(cmdArgs));
-      return;
-    }
     try {
-      Process p = Runtime.getRuntime().exec(cmdArgs, null, workingDir);
-      p.waitFor();
-      System.out.println(readStream(p.getInputStream()));
-      System.out.println(readStream(p.getErrorStream()));
+      executor.executeCommand(gitDir, "git", "clean", "-fd");
+      executor.executeCommand(gitDir, "git", "reset", "--hard", "HEAD");
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
   }
 
-  private static String runOnConsoleForOutput(File workingDir, String... cmdArgs) throws IOException, InterruptedException {
-    if (PRINT_ONLY) {
-      System.out.println(Arrays.toString(cmdArgs));
-      return "";
+  public static void revertMainDirectoryOnly(File gitDir) {
+    try {
+      executor.executeCommand(gitDir, "git", "checkout", "src/main/");
+    } catch (IOException | InterruptedException e) {
+      throw new RuntimeException(e);
     }
-    Process p = Runtime.getRuntime().exec(cmdArgs, null, workingDir);
-    p.waitFor();
-    return readStream(p.getInputStream());
   }
+
 }
