@@ -44,8 +44,30 @@ public class GitOperations {
     runOnConsole(gitDir, "git", "add", "-A");
   }
 
+  public static void amendCommit(File gitDir) {
+    try {
+      String output = runOnConsoleForOutput(gitDir, "git", "log", "--oneline", "-1");
+      if (output.trim().isEmpty()) {
+        System.err.println("Cannot amend: no previous commits found");
+        return;
+      }
+    } catch (Exception e) {
+      System.err.println("Cannot amend: no previous commits found");
+      return;
+    }
+    runOnConsole(gitDir, "git", "commit", "--amend", "--no-edit");
+  }
+
+  public static boolean isAmendMessage(String message) {
+    return "amend".equalsIgnoreCase(message);
+  }
+
   public static void commit(File gitDir, String message) {
-    runOnConsole(gitDir, "git", "commit", "-m", message);
+    if (isAmendMessage(message)) {
+      amendCommit(gitDir);
+    } else {
+      runOnConsole(gitDir, "git", "commit", "-m", message);
+    }
   }
 
   public static void revertAllChanges(File gitDir) {

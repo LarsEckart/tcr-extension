@@ -69,6 +69,7 @@ AbstractTcrExtension (base class)
 3. **After All Tests**: `AbstractTcrExtension.afterAll()` calls `onTestsPassed()` or `onTestsFailed()` based on results
 4. **Git Operations**: `GitOperations` utility handles git root discovery, status checking, and command execution
 5. **Commit Messages**: Interactive (UI prompts) or silent (hardcoded) commit message generation
+6. **Amend Support**: Users can type "amend" (case-insensitive) to perform `git commit --amend --no-edit` instead of regular commit
 
 ## Testing Approach
 

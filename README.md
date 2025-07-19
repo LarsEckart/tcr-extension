@@ -71,6 +71,10 @@ class LibraryTest {
 
 **Code:** `@ExtendWith(<extension_from_above>.class)`
 
+### Amend Support
+
+In interactive extensions (those that prompt for commit messages), you can type `amend` (case-insensitive) to amend the last commit instead of creating a new one. This executes `git commit --amend --no-edit`.
+
 ## Limitations
 
 * Does not support Gradle multi module projects
