@@ -2,7 +2,7 @@ name: Release to Maven Central Portal
 
 on:
   release:
-    types: [created]
+    types: [published]
 
 jobs:
   publish:
