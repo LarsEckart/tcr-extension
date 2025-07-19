@@ -7,6 +7,7 @@ on:
     paths:
       - '**.java'
       - 'build.gradle'
+      - 'build.gradle.kts'
       - 'gradle/wrapper/**'
       - '.github/workflows/test.yml'
   pull_request:
