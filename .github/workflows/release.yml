@@ -1,11 +1,8 @@
 name: Release to Maven Central Portal
 
 on:
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version to release'
-        required: true
+  release:
+    types: [created]
 
 jobs:
   publish:
@@ -37,8 +34,11 @@ jobs:
         
       - name: Update version in build.gradle.kts
         run: |
-          sed -i.bak 's/version = ".*"/version = "${{ github.event.inputs.version }}"/' build.gradle.kts
-          echo "Updated version to ${{ github.event.inputs.version }}"
+          VERSION="${{ github.event.release.tag_name }}"
+          # Remove 'v' prefix if present
+          VERSION="${VERSION#v}"
+          sed -i.bak 's/version = ".*"/version = "'"$VERSION"'"/' build.gradle.kts
+          echo "Updated version to $VERSION"
           grep "version = " build.gradle.kts
           
       - name: Publish to Maven Central Portal
@@ -49,3 +49,10 @@ jobs:
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGKEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGPASSWORD }}
         run: ./publish-to-central.sh
+
+      - name: Publish GitHub Release
+        if: success()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release edit "${{ github.event.release.tag_name }}" --draft=false
