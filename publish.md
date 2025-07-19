@@ -300,7 +300,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: 11
+          java-version: 17
           
       - name: Setup Gradle Build Action
         uses: gradle/gradle-build-action@v3

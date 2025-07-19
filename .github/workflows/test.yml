@@ -31,9 +31,7 @@ jobs:
       - uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
-          java-version: |
-            11
-            17
+          java-version: 17
           cache: 'gradle'
       - name: Run Gradle's test task
         run: ./gradlew --no-daemon --parallel --continue --build-cache --stacktrace test
