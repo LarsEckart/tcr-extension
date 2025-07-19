@@ -10,13 +10,13 @@ public class SilentTestCommitRevertMainExtension extends AbstractTcrExtension {
       System.out.println("Nothing to commit");
       return;
     }
-    GitOperations.runOnConsole(gitDir, "git", "add", "-A");
-    GitOperations.runOnConsole(gitDir, "git", "commit", "-m", "working");
+    GitOperations.stageAllChanges(gitDir);
+    GitOperations.commit(gitDir, "working");
   }
 
   @Override
   protected void onTestsFailed(File gitDir) {
-    GitOperations.runOnConsole(gitDir, "git", "checkout", "src/main/");
+    GitOperations.revertMainDirectoryOnly(gitDir);
     System.out.println("Test Failed, reverting...");
   }
 }

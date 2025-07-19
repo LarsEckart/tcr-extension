@@ -12,8 +12,8 @@ public class CommitOnGreenExtension extends AbstractTcrExtension {
     }
     String message = ArlosGitNotation2Prompt.display();
     if (!message.isEmpty()) {
-      GitOperations.runOnConsole(gitDir, "git", "add", "-A");
-      GitOperations.runOnConsole(gitDir, "git", "commit", "-m", message);
+      GitOperations.stageAllChanges(gitDir);
+      GitOperations.commit(gitDir, message);
     }
   }
 
