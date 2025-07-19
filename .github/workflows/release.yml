@@ -6,7 +6,6 @@ on:
       version:
         description: 'Version to release'
         required: true
-        default: '0.0.4'
 
 jobs:
   publish:

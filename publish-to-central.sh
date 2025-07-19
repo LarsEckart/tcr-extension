@@ -151,8 +151,65 @@ if [[ "$SKIP_UPLOAD" == "false" ]]; then
     
     if [[ -n "$DEPLOYMENT_ID" ]]; then
         echo "✅ Upload successful!"
-        echo "Check deployment status at: https://central.sonatype.com/publishing/deployments"
         echo "Deployment ID: $DEPLOYMENT_ID"
+        
+        # Wait for validation and auto-publish
+        echo "Checking deployment status and auto-publishing..."
+        MAX_ATTEMPTS=30
+        ATTEMPT=1
+        
+        while [[ $ATTEMPT -le $MAX_ATTEMPTS ]]; do
+            echo "Status check attempt $ATTEMPT/$MAX_ATTEMPTS..."
+            
+            STATUS_RESPONSE=$(curl --silent --request POST \
+              --header "Authorization: Bearer ${AUTH_TOKEN}" \
+              --header 'Content-Type: application/json' \
+              --data '{}' \
+              "https://central.sonatype.com/api/v1/publisher/status?id=${DEPLOYMENT_ID}")
+            
+            echo "Status response: $STATUS_RESPONSE"
+            
+            # Extract deployment state
+            STATE=$(echo "$STATUS_RESPONSE" | grep -o '"deploymentState":"[^"]*"' | cut -d'"' -f4)
+            echo "Current state: $STATE"
+            
+            case "$STATE" in
+                "VALIDATED")
+                    echo "✅ Deployment validated! Publishing..."
+                    PUBLISH_RESPONSE=$(curl --silent --request POST \
+                      --header "Authorization: Bearer ${AUTH_TOKEN}" \
+                      --header 'Content-Type: application/json' \
+                      --data '{}' \
+                      "https://central.sonatype.com/api/v1/publisher/deployment/${DEPLOYMENT_ID}")
+                    
+                    echo "Publish response: $PUBLISH_RESPONSE"
+                    echo "🚀 Publishing initiated! Check status at: https://central.sonatype.com/publishing/deployments"
+                    break
+                    ;;
+                "FAILED")
+                    echo "❌ Deployment validation failed!"
+                    echo "Check errors at: https://central.sonatype.com/publishing/deployments"
+                    exit 1
+                    ;;
+                "PENDING"|"VALIDATING")
+                    echo "⏳ Still validating... waiting 30 seconds"
+                    sleep 30
+                    ;;
+                "PUBLISHING"|"PUBLISHED")
+                    echo "🎉 Already published!"
+                    break
+                    ;;
+                *)
+                    echo "Unknown state: $STATE"
+                    ;;
+            esac
+            
+            ATTEMPT=$((ATTEMPT + 1))
+        done
+        
+        if [[ $ATTEMPT -gt $MAX_ATTEMPTS ]]; then
+            echo "⚠️ Timeout waiting for validation. Check manually at: https://central.sonatype.com/publishing/deployments"
+        fi
     else
         echo "❌ Upload failed"
         exit 1

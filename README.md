@@ -24,7 +24,7 @@ The easiest way to start a new project with this is by cloning [the starter proj
 
 ```groovy
 dependencies {
-    testImplementation("com.larseckart:junit-tcr-extensions:0.0.3")
+    testImplementation("com.larseckart:junit-tcr-extensions:0.0.4")
 }
 ```
 
@@ -35,7 +35,7 @@ dependencies {
 <dependency>
   <groupId>com.larseckart</groupId>
   <artifactId>junit-tcr-extensions</artifactId>
-  <version>0.0.3</version>
+  <version>0.0.4</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -77,7 +77,7 @@ class LibraryTest {
 * Right now there is a lot of duplication, I expect a lot of refactoring. Luckily this won't
   influence the usage at all.
 * No support yet to declare this extension for the whole test suit (at least I'm not aware).
-* No GitHub actions yet to automate Ci and release
+* GitHub Actions automate CI and release to Maven Central
 
 ## LICENSE
 
