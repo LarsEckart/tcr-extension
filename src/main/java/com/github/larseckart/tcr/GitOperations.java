@@ -44,7 +44,24 @@ public class GitOperations {
     }
   }
 
-  public static String readStream(InputStream inputStream) {
+  public static void stageAllChanges(File gitDir) {
+    runOnConsole(gitDir, "git", "add", "-A");
+  }
+
+  public static void commit(File gitDir, String message) {
+    runOnConsole(gitDir, "git", "commit", "-m", message);
+  }
+
+  public static void revertAllChanges(File gitDir) {
+    runOnConsole(gitDir, "git", "clean", "-fd");
+    runOnConsole(gitDir, "git", "reset", "--hard", "HEAD");
+  }
+
+  public static void revertMainDirectoryOnly(File gitDir) {
+    runOnConsole(gitDir, "git", "checkout", "src/main/");
+  }
+
+  private static String readStream(InputStream inputStream) {
     try (var reader =
         new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
       return reader.lines().collect(Collectors.joining("\n"));
@@ -53,7 +70,7 @@ public class GitOperations {
     }
   }
 
-  public static void runOnConsole(File workingDir, String... cmdArgs) throws Error {
+  private static void runOnConsole(File workingDir, String... cmdArgs) throws Error {
     if (PRINT_ONLY) {
       System.out.println(Arrays.toString(cmdArgs));
       return;

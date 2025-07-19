@@ -10,8 +10,8 @@ public class SilentCommitOnGreenExtension extends AbstractTcrExtension {
       System.out.println("Nothing to commit");
       return;
     }
-    GitOperations.runOnConsole(gitDir, "git", "add", "-A");
-    GitOperations.runOnConsole(gitDir, "git", "commit", "-m", "work in progress");
+    GitOperations.stageAllChanges(gitDir);
+    GitOperations.commit(gitDir, "work in progress");
   }
 
   @Override

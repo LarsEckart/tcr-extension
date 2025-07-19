@@ -12,15 +12,14 @@ public class TestCommitRevertExtension extends AbstractTcrExtension {
     }
     String message = ArlosGitNotation2Prompt.display();
     if (!message.isEmpty()) {
-      GitOperations.runOnConsole(gitDir, "git", "add", "-A");
-      GitOperations.runOnConsole(gitDir, "git", "commit", "-m", message);
+      GitOperations.stageAllChanges(gitDir);
+      GitOperations.commit(gitDir, message);
     }
   }
 
   @Override
   protected void onTestsFailed(File gitDir) {
-    GitOperations.runOnConsole(gitDir, "git", "clean", "-fd");
-    GitOperations.runOnConsole(gitDir, "git", "reset", "--hard", "HEAD");
+    GitOperations.revertAllChanges(gitDir);
     System.out.println("Test Failed, reverting...");
   }
 }
