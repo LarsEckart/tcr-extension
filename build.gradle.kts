@@ -59,7 +59,7 @@ publishing {
         create<MavenPublication>("sonatype") {
             artifactId = "junit-tcr-extensions"
             group = "com.larseckart"
-            version = "0.0.4"
+            version = project.version
             from(components["java"])
 
             pom {
@@ -98,4 +98,11 @@ signing {
     useInMemoryPgpKeys(signingKey, signingPassword)
 
     sign(publishing.publications["sonatype"])
+}
+
+// Task to print version for scripts
+tasks.register("printVersion") {
+    doLast {
+        println(version)
+    }
 }

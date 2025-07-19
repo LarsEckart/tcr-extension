@@ -4,8 +4,20 @@ set -e
 # Maven Central Portal Publishing Script
 # This script builds and publishes the TCR extension to Maven Central Portal
 
-# Configuration
-VERSION="${1:-0.0.4}"
+# Configuration - get version from Gradle project or parameter
+if [ -n "$1" ]; then
+    VERSION="$1"
+    echo "Using version from parameter: $VERSION"
+else
+    VERSION=$(./gradlew -q printVersion | tail -1)
+    if [ -z "$VERSION" ]; then
+        echo "Error: Could not determine version from Gradle project"
+        echo "Usage: $0 [version]"
+        echo "Example: $0 0.0.5"
+        exit 1
+    fi
+    echo "Using version from Gradle project: $VERSION"
+fi
 ARTIFACT="junit-tcr-extensions"
 GROUP_PATH="com/larseckart"
 
