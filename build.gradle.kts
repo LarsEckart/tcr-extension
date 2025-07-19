@@ -18,11 +18,11 @@ repositories {
 }
 
 dependencies {
-    api("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    api("org.junit.jupiter:junit-jupiter-api:5.13.3")
 
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.13.3")
     testImplementation("com.approvaltests:approvaltests:24.22.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.10.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.13.3")
 }
 
 tasks.register<Test>("testsOn17") {
