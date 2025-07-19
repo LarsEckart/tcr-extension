@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Poll Maven Central for junit-tcr-extensions version 0.0.5
+# Poll Maven Central for junit-tcr-extensions version 0.0.6
 # Shows macOS notification when version becomes available
 
-VERSION="0.0.5"
+VERSION="0.0.6"
 URL="https://repo1.maven.org/maven2/com/larseckart/junit-tcr-extensions/"
 INTERVAL=30
 
