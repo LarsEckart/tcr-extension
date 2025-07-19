@@ -3,7 +3,7 @@
 # Poll Maven Central for junit-tcr-extensions version 0.0.6
 # Shows macOS notification when version becomes available
 
-VERSION="0.0.6"
+VERSION="0.1.0"
 URL="https://repo1.maven.org/maven2/com/larseckart/junit-tcr-extensions/"
 INTERVAL=30
 

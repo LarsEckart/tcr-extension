@@ -24,7 +24,7 @@ The easiest way to start a new project with this is by cloning [the starter proj
 
 ```groovy
 dependencies {
-    testImplementation("com.larseckart:junit-tcr-extensions:0.0.4")
+    testImplementation("com.larseckart:junit-tcr-extensions:0.1.0")
 }
 ```
 
@@ -35,7 +35,7 @@ dependencies {
 <dependency>
   <groupId>com.larseckart</groupId>
   <artifactId>junit-tcr-extensions</artifactId>
-  <version>0.0.4</version>
+  <version>0.1.0</version>
   <scope>test</scope>
 </dependency>
 ```
@@ -78,8 +78,7 @@ In interactive extensions (those that prompt for commit messages), you can type 
 ## Limitations
 
 * Does not support Gradle multi module projects
-* Right now there is a lot of duplication, I expect a lot of refactoring. Luckily this won't
-  influence the usage at all.
+* Major code duplication has been eliminated through recent refactoring efforts.
 * No support yet to declare this extension for the whole test suit (at least I'm not aware).
 * GitHub Actions automate CI and release to Maven Central
 
