@@ -33,12 +33,8 @@ public class GitOperations {
 
   public static boolean isGitEmpty(File gitDir) {
     try {
-      runOnConsole(gitDir, "git", "status");
-      Process p = Runtime.getRuntime().exec(new String[] {"git", "status"}, null, gitDir);
-      p.waitFor();
-
-      String text = readStream(p.getInputStream());
-      return text.contains("nothing to commit");
+      String output = runOnConsoleForOutput(gitDir, "git", "status");
+      return output.contains("nothing to commit");
     } catch (Exception e) {
       return false;
     }
@@ -83,5 +79,15 @@ public class GitOperations {
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  private static String runOnConsoleForOutput(File workingDir, String... cmdArgs) throws IOException, InterruptedException {
+    if (PRINT_ONLY) {
+      System.out.println(Arrays.toString(cmdArgs));
+      return "";
+    }
+    Process p = Runtime.getRuntime().exec(cmdArgs, null, workingDir);
+    p.waitFor();
+    return readStream(p.getInputStream());
   }
 }
