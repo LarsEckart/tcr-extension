@@ -17,7 +17,8 @@ public class FastTestCommitRevertMainExtension extends TestCommitRevertMainExten
   protected String getCommitMessage() {
     try {
       ensureApplescript();
-      Process exec = Runtime.getRuntime().exec("osascript " + SCRIPT_PATH);
+      ProcessBuilder pb = new ProcessBuilder("osascript", SCRIPT_PATH);
+      Process exec = pb.start();
       exec.waitFor();
       InputStream inputStream = exec.getInputStream();
       BufferedReader reader = new BufferedReader(
