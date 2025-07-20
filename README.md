@@ -1,5 +1,5 @@
 [![test](https://github.com/LarsEckart/tcr-extension/actions/workflows/test.yml/badge.svg)](https://github.com/LarsEckart/tcr-extension/actions/workflows/test.yml)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.larseckart/junit-tcr-extensions/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.larseckart/junit-tcr-extensions)
+[![Maven Central](https://img.shields.io/maven-central/v/com.larseckart/junit-tcr-extensions)](https://central.sonatype.com/artifact/com.larseckart/junit-tcr-extensions)
 
 # tcr-extension
 
