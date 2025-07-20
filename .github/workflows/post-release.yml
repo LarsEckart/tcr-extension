@@ -1,0 +1,77 @@
+name: Post-Release Version Update
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    # Allow manual triggering
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Get latest release and check README
+      id: check
+      run: |
+        # Get latest release version
+        LATEST_VERSION=$(gh release list --limit 1 --json tagName --jq '.[0].tagName' | sed 's/^v//')
+        echo "Latest release: $LATEST_VERSION"
+
+        # Check current version in README
+        README_VERSION=$(grep -o 'junit-tcr-extensions:[0-9]\+\.[0-9]\+\.[0-9]\+' README.md | head -1 | sed 's/junit-tcr-extensions://')
+        echo "README version: $README_VERSION"
+
+        if [ "$LATEST_VERSION" != "$README_VERSION" ]; then
+          echo "Version mismatch found - checking Maven Central availability"
+          
+          # Check if version is available on Maven Central (single request, no polling)
+          MAVEN_URL="https://repo1.maven.org/maven2/com/larseckart/junit-tcr-extensions/$LATEST_VERSION/"
+          if curl -s --head "$MAVEN_URL" | head -n 1 | grep -q "200"; then
+            echo "✅ Version $LATEST_VERSION available on Maven Central - will update README"
+            echo "needs_update=true" >> $GITHUB_OUTPUT
+            echo "version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Version $LATEST_VERSION not yet available on Maven Central - skipping update"
+            echo "needs_update=false" >> $GITHUB_OUTPUT
+          fi
+        else
+          echo "README already up to date"
+          echo "needs_update=false" >> $GITHUB_OUTPUT
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update README.md version references
+      if: steps.check.outputs.needs_update == 'true'
+      run: |
+        VERSION="${{ steps.check.outputs.version }}"
+
+        # Update Gradle dependency version
+        sed -i "s/junit-tcr-extensions:[0-9]\+\.[0-9]\+\.[0-9]\+/junit-tcr-extensions:$VERSION/g" README.md
+
+        # Update Maven dependency version
+        sed -i "s/<version>[0-9]\+\.[0-9]\+\.[0-9]\+<\/version>/<version>$VERSION<\/version>/g" README.md
+
+        # Show what changed
+        git diff README.md
+
+    - name: Commit and push changes
+      if: steps.check.outputs.needs_update == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+        git add README.md
+        git commit -m "Update README.md to version ${{ steps.check.outputs.version }}
+
+🤖 Automated post-release version update
+
+Co-Authored-By: GitHub Action <action@github.com>"
+
+        git push origin main
