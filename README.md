@@ -3,18 +3,34 @@
 
 # tcr-extension
 
-[Kent Beck's test && commit || revert](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864)
-was an interesting and new approach at the end of 2018. Taking very small steps, allowing yourself
-to throw away code that didn't work and starting over, it's been fun to give that a try. Doing all
-the git ceremony around the workflow manually turned out to be quite tedious though. For Java &
-IntelliJ, there was no continuous test runner yet and using file watchers and bash scripts also
-didn't produce good results. While working
-on [ApprovalTests.Java](https://github.com/approvals/ApprovalTests.Java), I stumbled on a few JUnit4
-runners around that topic. To use them with JUnit5, I learned
-about [Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions) and that is how
-this project was born.
+JUnit 5 extensions for automating **Test-Commit-Revert (TCR)** workflow - taking the manual git ceremony out of Kent Beck's innovative development approach.
 
-## How to get it
+## Table of Contents
+
+* [About](#about)
+* [Getting Started](#getting-started)
+  * [Starter Project](#starter-project)
+  * [Gradle](#gradle)
+  * [Maven](#maven)
+* [Usage](#usage)
+  * [Examples](#examples)
+  * [Which Extension Should I Use?](#which-extension-should-i-use)
+  * [Amend Support](#amend-support)
+* [Limitations](#limitations)
+* [License](#license)
+* [Questions](#questions)
+
+## About
+
+[Kent Beck's test && commit || revert](https://medium.com/@kentbeck_7670/test-commit-revert-870bbd756864) introduced an interesting development workflow in 2018: take very small steps, commit when tests pass, revert when they fail. This forces you to work in tiny increments and throw away code that doesn't work.
+
+**The Problem:** Manually performing all the git operations (checking status, committing, reverting) becomes tedious ceremony that interrupts the flow of development.
+
+**The Solution:** These JUnit 5 extensions automate the git operations, letting you focus on writing code while the extension handles the commit/revert decisions based on your test results.
+
+Originally inspired by JUnit 4 runners for TCR, this project was born while working on [ApprovalTests.Java](https://github.com/approvals/ApprovalTests.Java) when I discovered JUnit 5 [Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions).
+
+## Getting Started
 
 ### Starter Project
 
@@ -40,7 +56,9 @@ dependencies {
 </dependency>
 ```
 
-## Examples
+## Usage
+
+### Examples
 
 ```java
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -82,7 +100,7 @@ In interactive extensions (those that prompt for commit messages), you can type 
 * No support yet to declare this extension for the whole test suit (at least I'm not aware).
 * GitHub Actions automate CI and release to Maven Central
 
-## LICENSE
+## License
 
 [Apache 2.0 License](https://github.com/LarsEckart/tcr-extension/blob/main/LICENSE)
 
