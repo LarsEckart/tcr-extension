@@ -70,8 +70,7 @@ jobs:
         git add README.md
         git commit -m "Update README.md to version ${{ steps.check.outputs.version }}
 
-🤖 Automated post-release version update
+        🤖 Automated post-release version update
 
-Co-Authored-By: GitHub Action <action@github.com>"
-
+        Co-Authored-By: GitHub Action <action@github.com>"
         git push origin main
