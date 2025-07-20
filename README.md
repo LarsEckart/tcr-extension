@@ -93,19 +93,11 @@ class LibraryTest {
 
 In interactive extensions (those that prompt for commit messages), you can type `amend` (case-insensitive) to amend the last commit instead of creating a new one. This executes `git commit --amend --no-edit`.
 
-## Limitations
-
-* Does not support Gradle multi module projects
-* Major code duplication has been eliminated through recent refactoring efforts.
-* No support yet to declare this extension for the whole test suit (at least I'm not aware).
-* GitHub Actions automate CI and release to Maven Central
-
 ## License
 
 [Apache 2.0 License](https://github.com/LarsEckart/tcr-extension/blob/main/LICENSE)
 
 ## Questions?
 
-Reach out on twitter: [@LrsEckrt](https://twitter.com/LrsEckrt)
-or publish an [issue](https://github.com/LarsEckart/tcr-extension/issues).
+Publish an [issue](https://github.com/LarsEckart/tcr-extension/issues).
 
