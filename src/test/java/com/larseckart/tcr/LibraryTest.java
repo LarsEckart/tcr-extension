@@ -1,12 +1,12 @@
 package com.larseckart.tcr;
 
-import static com.github.larseckart.tcr.GitOperations.isAmendMessage;
+import static com.larseckart.tcr.GitOperations.isAmendMessage;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.condition.OS.MAC;
 
-import com.github.larseckart.tcr.TestCommitRevertExtension;
+import com.larseckart.tcr.TestCommitRevertExtension;
 import org.junit.jupiter.api.Test;
 import java.io.File;
 import org.junit.jupiter.api.condition.EnabledOnOs;

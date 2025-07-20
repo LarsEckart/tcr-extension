@@ -1,4 +1,4 @@
-package com.github.larseckart.tcr;
+package com.larseckart.tcr;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

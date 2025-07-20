@@ -1,4 +1,4 @@
-package com.github.larseckart.tcr;
+package com.larseckart.tcr;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class ArlosGitNotationPrompt extends AbstractCommitPrompt {
+class ArlosGitNotationPrompt extends AbstractCommitPrompt {
 
   @Override
   protected void setLayout() {

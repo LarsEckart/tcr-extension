@@ -1,4 +1,4 @@
-package com.github.larseckart.tcr;
+package com.larseckart.tcr;
 
 import java.io.File;
 import java.io.IOException;

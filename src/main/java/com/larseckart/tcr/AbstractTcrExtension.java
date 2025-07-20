@@ -1,4 +1,4 @@
-package com.github.larseckart.tcr;
+package com.larseckart.tcr;
 
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.extension.TestExecutionExceptionHandler;
 
 import java.io.File;
 
-public abstract class AbstractTcrExtension implements TestExecutionExceptionHandler, AfterAllCallback {
+abstract class AbstractTcrExtension implements TestExecutionExceptionHandler, AfterAllCallback {
 
   private boolean failures = false;
 

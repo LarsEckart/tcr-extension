@@ -1,9 +1,9 @@
-package com.github.larseckart.tcr;
+package com.larseckart.tcr;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class JPanelHelpers {
+class JPanelHelpers {
     public static void addHelpText(JPanel panel, String text, int position, boolean first) {
         var gridBagConstraints = new GridBagConstraints();
         JLabel helpText = new JLabel(text);

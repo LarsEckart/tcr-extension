@@ -1,10 +1,10 @@
-package com.github.larseckart.tcr;
+package com.larseckart.tcr;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class ArlosGitNotation2Prompt extends AbstractCommitPrompt {
+class ArlosGitNotation2Prompt extends AbstractCommitPrompt {
 
   @Override
   protected void setLayout() {

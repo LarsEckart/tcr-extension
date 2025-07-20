@@ -1,8 +1,5 @@
 package com.larseckart.tcr;
 
-import com.github.larseckart.tcr.ArlosGitNotation2Prompt;
-import com.github.larseckart.tcr.ArlosGitNotationPrompt;
-import com.github.larseckart.tcr.TestCommitRevertExtension;
 import org.approvaltests.awt.AwtApprovals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledOnOs;

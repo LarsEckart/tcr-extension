@@ -1,10 +1,10 @@
-package com.github.larseckart.tcr;
+package com.larseckart.tcr;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public abstract class AbstractCommitPrompt {
+abstract class AbstractCommitPrompt {
   protected String message = "";
   protected boolean done = false;
   protected final JPanel panel = new JPanel();

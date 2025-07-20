@@ -1,9 +1,9 @@
-package com.github.larseckart.tcr;
+package com.larseckart.tcr;
 
 import java.io.File;
 import java.io.IOException;
 
-public class GitOperations {
+class GitOperations {
 
   private static ProcessExecutor executor = new ProcessBuilderExecutor();
   

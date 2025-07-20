@@ -1,8 +1,8 @@
-package com.github.larseckart.tcr;
+package com.larseckart.tcr;
 
 import java.io.File;
 
-public class TestCommitRevertExtension extends AbstractTcrExtension {
+public class TestCommitRevertMainExtension extends AbstractTcrExtension {
 
   @Override
   protected void onTestsPassed(File gitDir) {
@@ -10,7 +10,7 @@ public class TestCommitRevertExtension extends AbstractTcrExtension {
       System.out.println("Nothing to commit");
       return;
     }
-    String message = ArlosGitNotation2Prompt.display();
+    String message = getCommitMessage();
     if (!message.isEmpty()) {
       GitOperations.stageAllChanges(gitDir);
       GitOperations.commit(gitDir, message);
@@ -19,7 +19,11 @@ public class TestCommitRevertExtension extends AbstractTcrExtension {
 
   @Override
   protected void onTestsFailed(File gitDir) {
-    GitOperations.revertAllChanges(gitDir);
+    GitOperations.revertMainDirectoryOnly(gitDir);
     System.out.println("Test Failed, reverting...");
+  }
+
+  protected String getCommitMessage() {
+    return ArlosGitNotation2Prompt.display();
   }
 }
