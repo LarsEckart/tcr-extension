@@ -45,7 +45,7 @@ dependencies {
 ```java
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.github.larseckart.tcr.TestCommitRevertExtension;
+import com.larseckart.tcr.TestCommitRevertExtension;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
