@@ -18,15 +18,18 @@ repositories {
 }
 
 dependencies {
-    api("org.junit.jupiter:junit-jupiter-api:5.13.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.13.3")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.13.3")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.13.3")
+    api("org.junit.jupiter:junit-jupiter-api:6.0.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:6.0.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:6.0.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
 
     testImplementation("com.approvaltests:approvaltests:26.1.0")
 }
 
 tasks.register<Test>("testsOn17") {
+    useJUnitPlatform()
+    testClassesDirs = sourceSets["test"].output.classesDirs
+    classpath = sourceSets["test"].runtimeClasspath
     javaLauncher.set(javaToolchains.launcherFor {
         languageVersion.set(JavaLanguageVersion.of(17))
     })
@@ -64,9 +67,9 @@ publishing {
             from(components["java"])
 
             pom {
-                name.set("JUnit5 extensions for text-commit-revert")
+                name.set("JUnit extensions for test-commit-revert")
                 url.set("https://github.com/LarsEckart/tcr-extension")
-                description.set("JUnit 5 Extension for test-commit-revert")
+                description.set("JUnit 6 Extension for test-commit-revert")
                 licenses {
                     license {
                         name.set("Apache License 2.0")

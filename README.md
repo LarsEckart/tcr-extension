@@ -3,7 +3,7 @@
 
 # tcr-extension
 
-JUnit 5 extensions for automating **Test-Commit-Revert (TCR)** workflow - taking the manual git ceremony out of Kent Beck's innovative development approach.
+JUnit 6 extensions for automating **Test-Commit-Revert (TCR)** workflow - taking the manual git ceremony out of Kent Beck's innovative development approach.
 
 ## Table of Contents
 
@@ -26,9 +26,9 @@ JUnit 5 extensions for automating **Test-Commit-Revert (TCR)** workflow - taking
 
 **The Problem:** Manually performing all the git operations (checking status, committing, reverting) becomes tedious ceremony that interrupts the flow of development.
 
-**The Solution:** These JUnit 5 extensions automate the git operations, letting you focus on writing code while the extension handles the commit/revert decisions based on your test results.
+**The Solution:** These JUnit 6 extensions automate the git operations, letting you focus on writing code while the extension handles the commit/revert decisions based on your test results.
 
-Originally inspired by JUnit 4 runners for TCR, this project was born while working on [ApprovalTests.Java](https://github.com/approvals/ApprovalTests.Java) when I discovered JUnit 5 [Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions).
+Originally inspired by JUnit 4 runners for TCR, this project was born while working on [ApprovalTests.Java](https://github.com/approvals/ApprovalTests.Java) when I discovered JUnit 5 [Extensions](https://junit.org/junit5/docs/current/user-guide/#extensions). (Now updated to JUnit 6!)
 
 ## Getting Started
 

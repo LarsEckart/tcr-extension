@@ -4,11 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Java library providing JUnit 5 extensions for **Test-Commit-Revert (TCR)** workflow - Kent Beck's approach where tests either pass and commit, or fail and revert. 
+This is a Java library providing JUnit 6 extensions for **Test-Commit-Revert (TCR)** workflow - Kent Beck's approach where tests either pass and commit, or fail and revert. 
 The library automates git operations that would otherwise be manual ceremony.
 
 **Key Details:**
 - **Artifact**: `com.larseckart:junit-tcr-extensions:0.0.4`
+- **JUnit Version**: 6.0.1
 - **Java Version**: 17+
 - **Published**: Maven Central via GitHub Actions
 
@@ -75,7 +76,7 @@ AbstractTcrExtension (base class)
 
 - **Self-Dogfooding**: Tests use the TCR extension themselves (`@ExtendWith(TestCommitRevertExtension.class)`)
 - **Approval Testing**: UI components tested with ApprovalTests (macOS only)
-- **Dependencies**: JUnit 5, ApprovalTests for UI testing
+- **Dependencies**: JUnit 6, ApprovalTests for UI testing
 
 ## Project Structure
 
