@@ -40,7 +40,7 @@ The easiest way to start a new project with this is by cloning [the starter proj
 
 ```groovy
 dependencies {
-    testImplementation("com.larseckart:junit-tcr-extensions:1.0.0")
+    testImplementation("com.larseckart:junit-tcr-extensions:1.0.1")
 }
 ```
 
@@ -51,7 +51,7 @@ dependencies {
 <dependency>
   <groupId>com.larseckart</groupId>
   <artifactId>junit-tcr-extensions</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <scope>test</scope>
 </dependency>
 ```
