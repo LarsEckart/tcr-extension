@@ -18,12 +18,12 @@ repositories {
 }
 
 dependencies {
-    api("org.junit.jupiter:junit-jupiter-api:6.0.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:6.0.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:6.0.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.0.1")
+    api("org.junit.jupiter:junit-jupiter-api:6.1.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:6.1.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:6.1.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.1.1")
 
-    testImplementation("com.approvaltests:approvaltests:26.1.0")
+    testImplementation("com.approvaltests:approvaltests:31.0.0")
 }
 
 tasks.register<Test>("testsOn17") {
@@ -35,11 +35,11 @@ tasks.register<Test>("testsOn17") {
     })
 }
 
-val test by tasks.getting(Test::class) {
+tasks.test {
     useJUnitPlatform()
     testLogging {
         showExceptions = true
-        showStackTraces	= true
+        showStackTraces = true
     }
 }
 
@@ -97,8 +97,8 @@ publishing {
 }
 
 signing {
-    val signingKey: String? by project
-    val signingPassword: String? by project
+    val signingKey = project.findProperty("signingKey") as String?
+    val signingPassword = project.findProperty("signingPassword") as String?
     useInMemoryPgpKeys(signingKey, signingPassword)
 
     sign(publishing.publications["sonatype"])
