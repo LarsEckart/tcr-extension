@@ -9,7 +9,7 @@ The library automates git operations that would otherwise be manual ceremony.
 
 **Key Details:**
 - **Artifact**: `com.larseckart:junit-tcr-extensions:0.0.4`
-- **JUnit Version**: 6.0.1
+- **JUnit Version**: 6.1.1
 - **Java Version**: 17+
 - **Published**: Maven Central via GitHub Actions
 
