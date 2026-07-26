@@ -2,12 +2,14 @@ package com.larseckart.tcr;
 
 import org.approvaltests.awt.AwtApprovals;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfEnvironmentVariable;
 import org.junit.jupiter.api.condition.EnabledOnOs;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.junit.jupiter.api.condition.OS.MAC;
 
+// These UI approval tests require a real macOS display/WindowServer and do not run in headless CI.
 @EnabledOnOs({ MAC })
+@DisabledIfEnvironmentVariable(named = "CI", matches = ".*")
 public class ArloGitNotationPromptTest {
     @Test
     void testVersion1() {
